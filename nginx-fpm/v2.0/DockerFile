@@ -1,0 +1,7 @@
+FROM nginx:1.19.7-alpine
+WORKDIR /var/www/html
+RUN apk update && apk add --no-cache php8 php8-fpm openrc mc supervisor php8-pecl-xdebug && \
+        openrc && touch /run/openrc/softlevel && touch /etc/network/interfaces 
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD supervisord -c /etc/supervisor/conf.d/supervisord.conf
+EXPOSE 80      
